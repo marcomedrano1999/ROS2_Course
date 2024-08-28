@@ -1,0 +1,19 @@
+<launch>
+
+    <let name="lifecycle_move_robot_server_node_name_1" value="move_robot_server_1" />
+    <let name="lifecycle_move_robot_server_node_name_2" value="move_robot_server_2" />
+    <let name="lifecycle_move_robot_server_node_name_3" value="move_robot_server_3" />
+
+    <node pkg="lifecycle_cpp" exec="lifecycle_move_robot_server" name="$(var lifecycle_move_robot_server_node_name_1)">
+        <param name="action_server_name" value="move_robot_1" />
+    </node>
+
+    <node pkg="lifecycle_py" exec="lifecycle_move_robot_server" name="$(var lifecycle_move_robot_server_node_name_2)">
+        <param name="action_server_name" value="move_robot_2" />
+    </node>
+
+    <node pkg="lifecycle_py" exec="move_robot_node_manager" name="my_lifecycle_manager">
+        <param name="managed_node_names" value="['$(var lifecycle_move_robot_server_node_name_1)', '$(var lifecycle_move_robot_server_node_name_2)'] "/>
+    </node>
+
+</launch>

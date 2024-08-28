@@ -1,0 +1,11 @@
+# Goal
+float64 linear_vel_x
+float64 angular_vel_z
+float64 duration
+---
+# Result
+float64[] position
+string message
+---
+# Feedback
+float64[] current_position

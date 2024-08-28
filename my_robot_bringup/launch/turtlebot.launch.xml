@@ -1,0 +1,23 @@
+<launch>
+    <let name="turtle_node_name" value="turtle_controller_1" />
+    
+    <!-- Set turtlebot model -->
+    <set_env name="TURTLEBOT3_MODEL" value="waffle" />
+    
+    <!-- Launch the turtlebot env -->
+    <include file="$(find-pkg-share turtlebot3_gazebo)/launch/empty_world.launch.py" />
+
+    <!-- Create the container -->
+    <node pkg="rclcpp_components" exec="component_container_mt" name="turtle_container" />
+
+    <!-- Load the component -->
+    <executable cmd="ros2 component load /turtle_container turtlesim_catch_them_all_cpp 
+                    TurtleBotController::TurtleBotController -r __node:=$(var turtle_node_name)"
+                         output="screen" />
+
+    <!-- Load the lifecycle manager -->
+    <node pkg="lifecycle_py" exec="lifecycle_node_manager" name="turtle_lifecycle_manager">
+        <param name="managed_node_name" value="$(var turtle_node_name)"/>
+    </node>
+
+</launch>
